@@ -13,6 +13,13 @@ public class Contact {
     private String address;
     private String phone;
 
+    public Contact(String firstName, String lastName, String phone, String address){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+    }
+
     public int getId(){
         return id;
     }

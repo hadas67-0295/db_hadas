@@ -1,6 +1,7 @@
 package com.example.db_hadas;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
 
@@ -12,13 +13,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
-    EditText etFirstName = findViewById(R.id.etFirstName);
-    EditText etLastName = findViewById(R.id.etLastName);
-    EditText etAddress = findViewById(R.id.etAddress);
-    EditText etPhone = findViewById(R.id.etPhone);
+    EditText etFirstName;
+    EditText etLastName;
+    EditText etAddress;
+    EditText etPhone;
 
-    button btnSave = findViewById(R.id.btnSave);
+    Button btnSave;
     RecyclerView recyclerView;
+    Database database;
+    ContactDAO contactDao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,5 +34,23 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        etFirstName = findViewById(R.id.etFirstName);
+        etLastName = findViewById(R.id.etLastName);
+        etAddress = findViewById(R.id.etAddress);
+        etPhone = findViewById(R.id.etPhone);
+
+        btnSave = findViewById(R.id.btnSave);
+
+        database = Database.getInstance(this);
+        contactDao = database.contactDAO();
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Contact tamp = new Contact(etFirstName.getText().toString(), etLastName.getText().toString(),etPhone.getText().toString(),etAddress.getText().toString());
+                contactDao.insert(tamp);
+            }
+        });
+
     }
 }
